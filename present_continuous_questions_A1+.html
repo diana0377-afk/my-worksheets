@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 4 Homework: Present Continuous Questions</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Clean Fonts + Comic Speech Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,700;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf7f2;
+            color: #2c221e;
+        }
+
+        .font-comic {
+            font-family: 'Comic Neue', cursive;
+        }
+
+        /* Clean, simple worksheet card */
+        .sheet-card {
+            background: #ffffff;
+            border: 1px solid #e7dfd5;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(44, 34, 30, 0.04);
+        }
+
+        /* Warm Hand-Drawn Comic Panel Frame (matching reference aesthetic) */
+        .comic-panel-box {
+            border: 2.5px solid #2c221e;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f5ebd9;
+            box-shadow: 3px 3px 0px #d6c7b2;
+        }
+
+        /* Warm Cream Speech Bubbles */
+        .bubble-q {
+            position: relative;
+            background: #fffdf9;
+            border: 2px solid #2c221e;
+            border-radius: 16px;
+            padding: 8px 12px;
+        }
+        .bubble-q::after {
+            content: '';
+            position: absolute;
+            bottom: -9px;
+            left: 24px;
+            border-width: 9px 8px 0;
+            border-style: solid;
+            border-color: #2c221e transparent;
+        }
+        .bubble-q::before {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 26px;
+            border-width: 7px 6px 0;
+            border-style: solid;
+            border-color: #fffdf9 transparent;
+            z-index: 1;
+        }
+
+        .bubble-a {
+            position: relative;
+            background: #fffdf9;
+            border: 2px solid #2c221e;
+            border-radius: 16px;
+            padding: 6px 12px;
+        }
+        .bubble-a::after {
+            content: '';
+            position: absolute;
+            top: -9px;
+            right: 24px;
+            border-width: 0 8px 9px;
+            border-style: solid;
+            border-color: #2c221e transparent;
+        }
+        .bubble-a::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            right: 26px;
+            border-width: 0 6px 7px;
+            border-style: solid;
+            border-color: #fffdf9 transparent;
+            z-index: 1;
+        }
+
+        .clean-input {
+            border: 1.5px solid #cbbba4;
+            border-radius: 8px;
+            background: #faf6ef;
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            color: #2c221e;
+            transition: border-color 0.15s, background-color 0.15s;
+        }
+        .clean-input:focus {
+            outline: none;
+            border-color: #b45309;
+            background: #ffffff;
+        }
+
+        .word-pill {
+            border: 1px solid #d6c7b2;
+            background: #f7f1e6;
+            border-radius: 8px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.12s;
+        }
+        .word-pill:hover {
+            background: #ede2cf;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+
+    <!-- Clean Student Header (No Teacher Toggle Visible to Students) -->
+    <header class="bg-white/95 backdrop-blur border-b border-stone-200 sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-amber-700">English Grammar • Unit 4</span>
+                <h1 class="text-lg sm:text-xl font-bold text-stone-900">Present Continuous Questions — Homework</h1>
+            </div>
+
+            <!-- Back button only shown when Teacher Mode is unlocked -->
+            <div id="teacher-nav-bar" class="hidden flex items-center gap-2 bg-stone-100 p-1 rounded-xl">
+                <button id="btn-student-view" onclick="switchView('student')" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-stone-600 hover:text-stone-900 transition">
+                    Homework Sheet
+                </button>
+                <button id="btn-teacher-view" onclick="switchView('teacher')" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-white text-stone-900 shadow-sm transition flex items-center gap-1.5">
+                    Teacher Results
+                    <span id="submission-badge" class="bg-amber-700 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Teacher PIN Modal (Hidden from students unless they click the discrete footer link) -->
+    <div id="pin-modal" class="fixed inset-0 z-50 hidden bg-stone-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xs w-full p-6 shadow-xl border border-stone-200 space-y-4">
+            <div>
+                <h3 class="text-base font-bold text-stone-900">Teacher Results Access</h3>
+                <p class="text-xs text-stone-500 mt-1">Enter your teacher PIN to view submitted homework and mistakes.</p>
+            </div>
+            <input type="password" id="teacher-pin-input" maxlength="8" placeholder="PIN (default: 1234)" class="w-full px-3.5 py-2.5 border border-stone-300 rounded-xl text-center text-lg tracking-widest focus:outline-none focus:border-amber-700" onkeydown="if(event.key==='Enter') verifyTeacherPin()">
+            <p id="pin-error" class="hidden text-xs text-rose-600 font-medium text-center">Incorrect PIN. Try 1234.</p>
+            <div class="flex gap-2">
+                <button type="button" onclick="closePinModal()" class="flex-1 py-2 rounded-xl text-sm font-semibold text-stone-600 bg-stone-100 hover:bg-stone-200">Cancel</button>
+                <button type="button" onclick="verifyTeacherPin()" class="flex-1 py-2 rounded-xl text-sm font-semibold text-white bg-amber-700 hover:bg-amber-800">Unlock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-box" class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-stone-900 text-white rounded-xl p-4 shadow-lg">
+        <div class="flex items-start gap-3">
+            <span id="toast-icon" class="text-xl">✓</span>
+            <div>
+                <h4 id="toast-title" class="font-semibold text-sm text-white">Notice</h4>
+                <p id="toast-msg" class="text-xs text-stone-300 mt-0.5"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         STUDENT HOMEWORK SHEET
+    ====================================================================== -->
+    <main id="student-view" class="max-w-5xl mx-auto px-4 pt-6 space-y-8">
+
+        <!-- Student Name Card -->
+        <section class="sheet-card p-5 sm:p-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="student-name" class="block text-sm font-semibold text-stone-700 mb-1">Student Full Name *</label>
+                    <input type="text" id="student-name" placeholder="Write your first and last name" class="w-full px-3.5 py-2.5 text-base border border-stone-300 rounded-xl focus:outline-none focus:border-amber-700">
+                </div>
+                <div>
+                    <label for="student-class" class="block text-sm font-semibold text-stone-700 mb-1">Class / Group</label>
+                    <input type="text" id="student-class" placeholder="e.g. 8A" class="w-full px-3.5 py-2.5 text-base border border-stone-300 rounded-xl focus:outline-none focus:border-amber-700">
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             EXERCISE 4.1 — WARM HAND-DRAWN COMIC STRIP PANELS
+        ================================================================== -->
+        <section class="sheet-card p-5 sm:p-6 space-y-5">
+            <div class="border-b border-stone-100 pb-3">
+                <span class="inline-block bg-amber-100/80 text-amber-900 font-bold text-xs px-2.5 py-1 rounded-md mb-1">Exercise 4.1</span>
+                <h2 class="text-lg sm:text-xl font-bold text-stone-900">Look at the pictures and write the questions.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- 4.1 Panel 1 (Example) -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">1. Example</span>
+                            <span class="text-xs font-semibold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded">Done</span>
+                        </div>
+                        
+                        <div class="bubble-q mb-3">
+                            <p class="text-xs text-stone-500 mb-0.5">(you / watch / it?)</p>
+                            <p class="font-comic text-lg text-emerald-800">Are you watching it?</p>
+                        </div>
+
+                        <!-- Warm Hand-Drawn Comic Art 1: Cozy Living Room TV & Surfing -->
+                        <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] mb-3 bg-[#ebd9be]">
+                            <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                                <!-- Warm Wallpaper & Curtains -->
+                                <rect width="320" height="150" fill="#ebd9be"/>
+                                <rect x="0" y="150" width="320" height="40" fill="#cfa97e"/>
+                                <line x1="0" y1="150" x2="320" y2="150" stroke="#2c221e" stroke-width="2"/>
+                                <!-- Framed Wall Art -->
+                                <rect x="132" y="16" width="36" height="44" rx="2" fill="#f7eedc" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="150" cy="34" r="7" fill="#d97706"/>
+                                <path d="M136 54 L146 42 L154 50 L164 43 L164 56 L136 56 Z" fill="#859a73"/>
+
+                                <!-- TV Console & Flat Screen TV -->
+                                <rect x="18" y="108" width="90" height="42" rx="3" fill="#9c6b43" stroke="#2c221e" stroke-width="2"/>
+                                <line x1="63" y1="108" x2="63" y2="150" stroke="#2c221e" stroke-width="2"/>
+                                <rect x="16" y="42" width="94" height="60" rx="5" fill="#3d312a" stroke="#2c221e" stroke-width="2.2"/>
+                                <rect x="22" y="48" width="82" height="48" rx="2" fill="#9ec5c9" stroke="#2c221e" stroke-width="1.5"/>
+                                <!-- Surfing Scene on TV -->
+                                <path d="M22 76 Q46 58 72 74 Q90 84 104 72 L104 96 L22 96 Z" fill="#5f9ea0"/>
+                                <path d="M46 66 Q62 56 76 64" stroke="#fffdf9" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                <ellipse cx="64" cy="73" rx="15" ry="3.5" fill="#e09f3e" stroke="#2c221e" stroke-width="1.3" transform="rotate(-12 64 73)"/>
+                                <circle cx="64" cy="59" r="4" fill="#f3c69f" stroke="#2c221e" stroke-width="1.2"/>
+                                <path d="M64 63 L63 70 M58 65 L70 64" stroke="#2c221e" stroke-width="1.8" stroke-linecap="round"/>
+                                <rect x="57" y="102" width="12" height="6" fill="#2c221e"/>
+
+                                <!-- Warm Tan Sofa -->
+                                <rect x="162" y="106" width="144" height="46" rx="12" fill="#c87d4b" stroke="#2c221e" stroke-width="2.2"/>
+                                <rect x="282" y="84" width="24" height="68" rx="9" fill="#b56c3b" stroke="#2c221e" stroke-width="2.2"/>
+
+                                <!-- Teen Girl in Cozy Ribbed Sweater holding Remote -->
+                                <path d="M178 86 C178 78 206 78 208 86 L214 124 L173 124 Z" fill="#c25934" stroke="#2c221e" stroke-width="2"/>
+                                <line x1="186" y1="84" x2="184" y2="124" stroke="#9e4222" stroke-width="1.2"/>
+                                <line x1="194" y1="84" x2="194" y2="124" stroke="#9e4222" stroke-width="1.2"/>
+                                <line x1="201" y1="84" x2="203" y2="124" stroke="#9e4222" stroke-width="1.2"/>
+                                <!-- Head & Flowing Brown Hair -->
+                                <path d="M178 60 C176 42 212 42 212 64 C213 78 209 92 204 96 L184 94 C179 86 178 72 178 60 Z" fill="#5c3a21" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="193" cy="63" r="13.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M180 58 C186 52 198 50 206 58" fill="#5c3a21" stroke="#2c221e" stroke-width="1.8"/>
+                                <!-- Soft Friendly Eyes & Smile -->
+                                <circle cx="187" cy="63" r="1.7" fill="#2c221e"/>
+                                <circle cx="196" cy="63" r="1.7" fill="#2c221e"/>
+                                <path d="M188 69 Q192 72 195 69" stroke="#2c221e" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                                <!-- Arm pointing TV Remote -->
+                                <path d="M180 92 L146 86" stroke="#c25934" stroke-width="7.5" stroke-linecap="round"/>
+                                <path d="M180 92 L146 86" stroke="#2c221e" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                <circle cx="144" cy="86" r="4" fill="#f3c69f" stroke="#2c221e" stroke-width="1.6"/>
+                                <rect x="130" y="83" width="15" height="5" rx="2" fill="#3d312a" stroke="#2c221e" stroke-width="1.5"/>
+
+                                <!-- Teen Boy Reading Book/Magazine -->
+                                <path d="M236 86 C236 78 264 78 266 86 L272 124 L232 124 Z" fill="#6b8e67" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="250" cy="61" r="13.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M236 57 C238 43 262 43 264 57 C257 52 243 52 236 57 Z" fill="#4a2e1b" stroke="#2c221e" stroke-width="1.8"/>
+                                <circle cx="244" cy="63" r="1.7" fill="#2c221e"/>
+                                <circle cx="253" cy="63" r="1.7" fill="#2c221e"/>
+                                <path d="M246 69 Q249 71 252 69" stroke="#2c221e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                                <!-- Open Book -->
+                                <polygon points="216,90 238,86 241,112 219,116" fill="#fffdf9" stroke="#2c221e" stroke-width="1.8"/>
+                                <polygon points="238,86 260,90 257,116 241,112" fill="#f7eedc" stroke="#2c221e" stroke-width="1.8"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bubble-a text-right">
+                        <p class="font-comic text-base text-stone-800">"No, you can turn it off."</p>
+                    </div>
+                </div>
+
+                <!-- 4.1 Panel 2 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">2.</span>
+                            <span class="text-xs text-stone-500">Question 1</span>
+                        </div>
+
+                        <div class="bubble-q mb-3">
+                            <label for="q-4_1_2" class="block text-xs text-stone-500 mb-1">(you / leave / now?)</label>
+                            <input type="text" id="q-4_1_2" placeholder="Write question..." class="clean-input w-full px-2.5 py-1.5 text-base">
+                            <p id="fb-4_1_2" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+
+                        <!-- Warm Hand-Drawn Comic Art 2: Teen Leaving Study Room -->
+                        <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] mb-3 bg-[#f2e2c9]">
+                            <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                                <rect width="320" height="150" fill="#f2e2c9"/>
+                                <rect x="0" y="150" width="320" height="40" fill="#d9bc94"/>
+                                <line x1="0" y1="150" x2="320" y2="150" stroke="#2c221e" stroke-width="2"/>
+
+                                <!-- Wooden Doorway on Right -->
+                                <rect x="218" y="22" width="74" height="128" fill="#dce6dc" stroke="#2c221e" stroke-width="2.2"/>
+                                <polygon points="218,22 256,30 256,142 218,150" fill="#b87a4b" stroke="#2c221e" stroke-width="2.2"/>
+                                <circle cx="249" cy="86" r="3" fill="#2c221e"/>
+
+                                <!-- Teen Girl with Backpack Walking Out -->
+                                <rect x="171" y="76" width="16" height="30" rx="6" fill="#6b8e67" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M188 116 L178 154 M200 116 L211 154" stroke="#4a6572" stroke-width="6.5" stroke-linecap="round"/>
+                                <ellipse cx="176" cy="156" rx="8" ry="4" fill="#fffdf9" stroke="#2c221e" stroke-width="1.8"/>
+                                <ellipse cx="213" cy="156" rx="8" ry="4" fill="#fffdf9" stroke="#2c221e" stroke-width="1.8"/>
+                                <path d="M183 74 L205 74 L208 118 L181 118 Z" fill="#c25934" stroke="#2c221e" stroke-width="2"/>
+                                <!-- Head & Ponytail -->
+                                <path d="M181 48 Q167 52 169 68" stroke="#5c3a21" stroke-width="6" fill="none" stroke-linecap="round"/>
+                                <circle cx="195" cy="56" r="13.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M181 52 C182 38 206 38 208 54 C200 48 188 48 181 52 Z" fill="#5c3a21" stroke="#2c221e" stroke-width="1.8"/>
+                                <circle cx="199" cy="56" r="1.6" fill="#2c221e"/>
+                                <path d="M196 62 Q199 64 202 62" stroke="#2c221e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                                <!-- Waving Hand -->
+                                <path d="M204 82 L222 72" stroke="#c25934" stroke-width="6" stroke-linecap="round"/>
+                                <circle cx="224" cy="70" r="3.8" fill="#f3c69f" stroke="#2c221e" stroke-width="1.6"/>
+
+                                <!-- Teen Boy at Desk with Laptop & Mug -->
+                                <rect x="18" y="108" width="108" height="8" rx="2" fill="#9c6b43" stroke="#2c221e" stroke-width="2"/>
+                                <rect x="28" y="116" width="8" height="36" fill="#7c5230" stroke="#2c221e" stroke-width="1.8"/>
+                                <rect x="108" y="116" width="8" height="36" fill="#7c5230" stroke="#2c221e" stroke-width="1.8"/>
+                                <path d="M36 80 L64 80 L68 118 L32 118 Z" fill="#d98a3c" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="50" cy="62" r="13.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M36 58 C38 44 62 44 64 58 Z" fill="#3d2817" stroke="#2c221e" stroke-width="1.8"/>
+                                <circle cx="54" cy="62" r="1.6" fill="#2c221e"/>
+                                <path d="M51 68 Q54 70 57 68" stroke="#2c221e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                                <!-- Laptop -->
+                                <polygon points="70,108 104,108 114,82 80,82" fill="#94a3b8" stroke="#2c221e" stroke-width="2"/>
+                                <rect x="24" y="96" width="10" height="12" rx="2" fill="#fffdf9" stroke="#2c221e" stroke-width="1.6"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bubble-a text-right">
+                        <p class="font-comic text-base text-stone-800">"Yes, see you tomorrow."</p>
+                    </div>
+                </div>
+
+                <!-- 4.1 Panel 3 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">3.</span>
+                            <span class="text-xs text-stone-500">Question 2</span>
+                        </div>
+
+                        <div class="bubble-q mb-3">
+                            <label for="q-4_1_3" class="block text-xs text-stone-500 mb-1">(it / rain?)</label>
+                            <input type="text" id="q-4_1_3" placeholder="Write question..." class="clean-input w-full px-2.5 py-1.5 text-base">
+                            <p id="fb-4_1_3" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+
+                        <!-- Warm Hand-Drawn Comic Art 3: Looking Out Window -->
+                        <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] mb-3 bg-[#efe0c6]">
+                            <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                                <rect width="320" height="190" fill="#efe0c6"/>
+                                <!-- Window with Soft Blue-Grey Sky -->
+                                <rect x="184" y="18" width="118" height="96" rx="4" fill="#c7dce0" stroke="#2c221e" stroke-width="2.2"/>
+                                <line x1="243" y1="18" x2="243" y2="114" stroke="#2c221e" stroke-width="2.2"/>
+                                <line x1="184" y1="66" x2="302" y2="66" stroke="#2c221e" stroke-width="2.2"/>
+                                <!-- Soft Clouds (No Rain) -->
+                                <path d="M202 48 Q208 36 222 39 Q234 30 248 40 Q259 40 257 50 Z" fill="#fffdf9" stroke="#2c221e" stroke-width="1.5"/>
+                                <path d="M252 92 Q258 83 269 85 Q279 79 289 86 Q296 86 294 94 Z" fill="#fffdf9" stroke="#2c221e" stroke-width="1.5"/>
+
+                                <!-- Desk -->
+                                <rect x="14" y="126" width="292" height="12" rx="2" fill="#9c6b43" stroke="#2c221e" stroke-width="2"/>
+
+                                <!-- Teen 1 at Laptop -->
+                                <circle cx="72" cy="70" r="14.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M57 66 C58 50 86 50 87 66 Z" fill="#5c3a21" stroke="#2c221e" stroke-width="1.8"/>
+                                <circle cx="76" cy="70" r="1.6" fill="#2c221e"/>
+                                <path d="M55 86 L89 86 L94 126 L50 126 Z" fill="#c25934" stroke="#2c221e" stroke-width="2"/>
+                                <rect x="44" y="90" width="56" height="36" rx="4" fill="#e2d5c1" stroke="#2c221e" stroke-width="2"/>
+
+                                <!-- Teen 2 Pointing Out Window -->
+                                <path d="M148 64 C148 44 180 44 180 66 L182 94 L146 92 Z" fill="#3d2817" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="164" cy="68" r="14.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M150 62 C156 56 170 55 178 62" fill="#3d2817"/>
+                                <circle cx="169" cy="68" r="1.6" fill="#2c221e"/>
+                                <path d="M148 84 L180 84 L184 126 L144 126 Z" fill="#6b8e67" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M178 90 L212 76" stroke="#f3c69f" stroke-width="6" stroke-linecap="round"/>
+                                <path d="M178 90 L212 76" stroke="#2c221e" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                                <rect x="136" y="92" width="52" height="34" rx="4" fill="#e2d5c1" stroke="#2c221e" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bubble-a text-right">
+                        <p class="font-comic text-base text-stone-800">"No, not right now."</p>
+                    </div>
+                </div>
+
+                <!-- 4.1 Panel 4 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">4.</span>
+                            <span class="text-xs text-stone-500">Question 3</span>
+                        </div>
+
+                        <div class="bubble-q mb-3">
+                            <label for="q-4_1_4" class="block text-xs text-stone-500 mb-1">(you / enjoy / the movie?)</label>
+                            <input type="text" id="q-4_1_4" placeholder="Write question..." class="clean-input w-full px-2.5 py-1.5 text-base">
+                            <p id="fb-4_1_4" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+
+                        <!-- Warm Hand-Drawn Comic Art 4: Cozy Cinema with Popcorn -->
+                        <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] mb-3 bg-[#3d312a]">
+                            <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                                <rect width="320" height="190" fill="#3d312a"/>
+                                <!-- Warm Projector Light Cone -->
+                                <polygon points="20,0 300,0 245,190 75,190" fill="#f5ebd9" opacity="0.16"/>
+                                <circle cx="48" cy="114" r="13" fill="#2c221e"/>
+                                <circle cx="272" cy="114" r="13" fill="#2c221e"/>
+
+                                <!-- Teen Boy Watching -->
+                                <path d="M104 122 L148 122 L156 190 L96 190 Z" fill="#4a6572" stroke="#2c221e" stroke-width="2.2"/>
+                                <circle cx="126" cy="98" r="17" fill="#f3c69f" stroke="#2c221e" stroke-width="2.2"/>
+                                <path d="M109 92 C111 74 141 74 143 92 Z" fill="#4a2e1b" stroke="#2c221e" stroke-width="1.8"/>
+                                <circle cx="121" cy="97" r="1.8" fill="#2c221e"/>
+                                <circle cx="131" cy="97" r="1.8" fill="#2c221e"/>
+                                <path d="M121 105 Q126 109 131 105" stroke="#2c221e" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+                                <!-- Teen Girl Laughing at Movie -->
+                                <path d="M172 122 L216 122 L224 190 L164 190 Z" fill="#c25934" stroke="#2c221e" stroke-width="2.2"/>
+                                <path d="M174 96 C174 72 214 72 214 96 L217 126 L171 126 Z" fill="#5c3a21" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="194" cy="99" r="17" fill="#f3c69f" stroke="#2c221e" stroke-width="2.2"/>
+                                <path d="M180 92 C187 86 201 86 208 92" fill="#5c3a21"/>
+                                <path d="M185 95 Q188 92 191 95" stroke="#2c221e" stroke-width="1.8" fill="none"/>
+                                <path d="M197 95 Q200 92 203 95" stroke="#2c221e" stroke-width="1.8" fill="none"/>
+                                <path d="M188 103 Q194 111 200 103 Z" fill="#c25934" stroke="#2c221e" stroke-width="1.5"/>
+
+                                <!-- Classic Popcorn Bucket -->
+                                <polygon points="146,136 174,136 169,178 151,178" fill="#fffdf9" stroke="#2c221e" stroke-width="2"/>
+                                <line x1="154" y1="136" x2="156" y2="178" stroke="#c25934" stroke-width="3.5"/>
+                                <line x1="166" y1="136" x2="164" y2="178" stroke="#c25934" stroke-width="3.5"/>
+                                <circle cx="152" cy="132" r="5" fill="#f3d285" stroke="#2c221e" stroke-width="1.3"/>
+                                <circle cx="160" cy="129" r="6" fill="#f3d285" stroke="#2c221e" stroke-width="1.3"/>
+                                <circle cx="168" cy="132" r="5" fill="#f3d285" stroke="#2c221e" stroke-width="1.3"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bubble-a text-right">
+                        <p class="font-comic text-base text-stone-800">"Yes, it's really funny."</p>
+                    </div>
+                </div>
+
+                <!-- 4.1 Panel 5 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">5.</span>
+                            <span class="text-xs text-stone-500">Question 4</span>
+                        </div>
+
+                        <div class="bubble-q mb-3">
+                            <label for="q-4_1_5" class="block text-xs text-stone-500 mb-1">(that clock / work?)</label>
+                            <input type="text" id="q-4_1_5" placeholder="Write question..." class="clean-input w-full px-2.5 py-1.5 text-base">
+                            <p id="fb-4_1_5" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+
+                        <!-- Warm Hand-Drawn Comic Art 5: Broken Wall Clock -->
+                        <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] mb-3 bg-[#f2e5d0]">
+                            <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                                <rect width="320" height="190" fill="#f2e5d0"/>
+                                <!-- Tilted Broken Wall Clock -->
+                                <g transform="rotate(14 160 52)">
+                                    <circle cx="160" cy="52" r="25" fill="#fffdf9" stroke="#2c221e" stroke-width="2.5"/>
+                                    <line x1="160" y1="52" x2="160" y2="35" stroke="#2c221e" stroke-width="2.5" stroke-linecap="round"/>
+                                    <line x1="160" y1="52" x2="173" y2="60" stroke="#c25934" stroke-width="2.2" stroke-linecap="round"/>
+                                    <circle cx="160" cy="52" r="2.8" fill="#2c221e"/>
+                                </g>
+                                <line x1="193" y1="34" x2="201" y2="28" stroke="#c25934" stroke-width="2.2" stroke-linecap="round"/>
+                                <line x1="195" y1="44" x2="205" y2="42" stroke="#c25934" stroke-width="2.2" stroke-linecap="round"/>
+
+                                <!-- Teen 1 Pointing at Clock -->
+                                <path d="M71 84 C71 64 105 64 105 86 L107 112 L69 110 Z" fill="#5c3a21" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="88" cy="88" r="15.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="93" cy="88" r="1.7" fill="#2c221e"/>
+                                <path d="M70 106 L106 106 L112 172 L64 172 Z" fill="#6b8e67" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M104 112 L136 74" stroke="#f3c69f" stroke-width="6" stroke-linecap="round"/>
+                                <path d="M104 112 L136 74" stroke="#2c221e" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+                                <!-- Teen 2 Checking Wristwatch -->
+                                <circle cx="232" cy="88" r="15.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M216 82 C218 66 246 66 248 82 Z" fill="#3d2817" stroke="#2c221e" stroke-width="1.8"/>
+                                <circle cx="227" cy="88" r="1.7" fill="#2c221e"/>
+                                <path d="M214 106 L250 106 L256 172 L208 172 Z" fill="#d98a3c" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M214 114 L196 124 L212 132" stroke="#f3c69f" stroke-width="6" fill="none" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bubble-a text-right">
+                        <p class="font-comic text-base text-stone-800">"No, it's broken."</p>
+                    </div>
+                </div>
+
+                <!-- 4.1 Panel 6 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">6.</span>
+                            <span class="text-xs text-stone-500">Question 5</span>
+                        </div>
+
+                        <div class="bubble-q mb-3">
+                            <label for="q-4_1_6" class="block text-xs text-stone-500 mb-1">(you / wait / for a bus?)</label>
+                            <input type="text" id="q-4_1_6" placeholder="Write question..." class="clean-input w-full px-2.5 py-1.5 text-base">
+                            <p id="fb-4_1_6" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+
+                        <!-- Warm Hand-Drawn Comic Art 6: Bus Stop Sign on Cozy Street -->
+                        <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] mb-3 bg-[#e6dec8]">
+                            <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                                <rect width="320" height="145" fill="#e6dec8"/>
+                                <!-- Soft Background Buildings -->
+                                <rect x="16" y="64" width="38" height="81" fill="#d6cab3" stroke="#2c221e" stroke-width="1.5"/>
+                                <rect x="60" y="48" width="44" height="97" fill="#cbbda4" stroke="#2c221e" stroke-width="1.5"/>
+                                <rect x="195" y="58" width="48" height="87" fill="#d6cab3" stroke="#2c221e" stroke-width="1.5"/>
+                                <!-- Sidewalk & Street -->
+                                <rect x="0" y="145" width="320" height="45" fill="#8c8275"/>
+                                <line x1="0" y1="145" x2="320" y2="145" stroke="#2c221e" stroke-width="2"/>
+                                <line x1="0" y1="168" x2="320" y2="168" stroke="#f5ebd9" stroke-width="2.5" stroke-dasharray="16,14"/>
+
+                                <!-- Bus Stop Sign Post -->
+                                <rect x="268" y="38" width="4.5" height="107" fill="#2c221e"/>
+                                <rect x="252" y="24" width="36" height="25" rx="4" fill="#4a6572" stroke="#2c221e" stroke-width="2"/>
+                                <text x="258" y="41" font-family="Inter" font-weight="800" font-size="11" fill="#fffdf9">BUS</text>
+
+                                <!-- Teen Girl Walking Up -->
+                                <path d="M74 116 L64 148 M88 116 L98 148" stroke="#2c221e" stroke-width="5.5" stroke-linecap="round"/>
+                                <path d="M68 76 L94 76 L98 118 L64 118 Z" fill="#c25934" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M66 56 C66 38 96 38 96 56 L98 82 L64 80 Z" fill="#7c4d2b" stroke="#2c221e" stroke-width="1.8"/>
+                                <circle cx="81" cy="58" r="13.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="85" cy="58" r="1.6" fill="#2c221e"/>
+
+                                <!-- Teen Boy Waiting at Bus Stop -->
+                                <path d="M180 116 L180 148 M194 116 L194 148" stroke="#2c221e" stroke-width="5.5" stroke-linecap="round"/>
+                                <path d="M172 74 L202 74 L205 118 L169 118 Z" fill="#4a6572" stroke="#2c221e" stroke-width="2"/>
+                                <circle cx="187" cy="56" r="13.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                                <path d="M173 52 C175 38 199 38 201 52 Z" fill="#3d2817" stroke="#2c221e" stroke-width="1.8"/>
+                                <circle cx="182" cy="56" r="1.6" fill="#2c221e"/>
+                                <path d="M172 82 L156 88" stroke="#f3c69f" stroke-width="5" stroke-linecap="round"/>
+                                <rect x="150" y="78" width="8" height="14" rx="1.5" fill="#fffdf9" stroke="#2c221e" stroke-width="1.6"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bubble-a text-right">
+                        <p class="font-comic text-base text-stone-800">"No, for a taxi."</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =================================================================
+             EXERCISE 4.2 — VERB BOX + WARM COMIC SCENES
+        ================================================================== -->
+        <section class="sheet-card p-5 sm:p-6 space-y-5">
+            <div class="border-b border-stone-100 pb-3 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <span class="inline-block bg-amber-100/80 text-amber-900 font-bold text-xs px-2.5 py-1 rounded-md mb-1">Exercise 4.2</span>
+                    <h2 class="text-lg sm:text-xl font-bold text-stone-900">Look at the pictures and complete the questions.</h2>
+                </div>
+
+                <!-- Clean Verb Word Bank -->
+                <div class="flex flex-wrap items-center gap-2 bg-stone-50 border border-stone-200 px-3 py-2 rounded-xl">
+                    <span class="text-xs font-bold uppercase text-stone-500 mr-1">Use:</span>
+                    <span class="bg-white border border-stone-300 px-2.5 py-0.5 rounded font-comic text-base text-stone-800">cry</span>
+                    <span class="bg-white border border-stone-300 px-2.5 py-0.5 rounded font-comic text-base text-stone-800">eat</span>
+                    <span class="bg-white border border-stone-300 px-2.5 py-0.5 rounded font-comic text-base text-stone-800">go</span>
+                    <span class="bg-white border border-stone-300 px-2.5 py-0.5 rounded font-comic text-base text-stone-800">laugh</span>
+                    <span class="bg-white border border-stone-300 px-2.5 py-0.5 rounded font-comic text-base text-stone-800">look at</span>
+                    <span class="bg-stone-100 border border-stone-200 px-2.5 py-0.5 rounded font-comic text-base text-stone-400 line-through">read</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- 4.2 Panel 1 (Example) -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">1. Example</span>
+                            <span class="text-xs font-semibold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded">Done</span>
+                        </div>
+                        <div class="bubble-q mb-3">
+                            <p class="font-comic text-lg text-stone-900">
+                                What <span class="text-emerald-800 underline">are you reading</span> ?
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Warm Comic Art: Teen reading book in armchair -->
+                    <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] bg-[#f2e2c9]">
+                        <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                            <rect width="320" height="150" fill="#f2e2c9"/>
+                            <rect x="0" y="150" width="320" height="40" fill="#d9bc94"/>
+                            <line x1="0" y1="150" x2="320" y2="150" stroke="#2c221e" stroke-width="2"/>
+                            <!-- Cozy Armchair -->
+                            <rect x="24" y="84" width="84" height="72" rx="14" fill="#b86b35" stroke="#2c221e" stroke-width="2.2"/>
+                            <!-- Teen Girl Reading -->
+                            <path d="M52 68 C52 48 84 48 84 68 L86 92 L50 90 Z" fill="#5c3a21" stroke="#2c221e" stroke-width="2"/>
+                            <circle cx="68" cy="70" r="14.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <circle cx="73" cy="70" r="1.6" fill="#2c221e"/>
+                            <path d="M52 86 L84 86 L90 128 L48 128 Z" fill="#c25934" stroke="#2c221e" stroke-width="2"/>
+                            <polygon points="78,94 106,85 110,112 82,120" fill="#4a6572" stroke="#2c221e" stroke-width="1.8"/>
+                            <!-- Teen Friend Asking -->
+                            <circle cx="212" cy="54" r="14.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M197 50 C199 36 225 36 227 50 Z" fill="#3d2817" stroke="#2c221e" stroke-width="1.8"/>
+                            <circle cx="207" cy="54" r="1.6" fill="#2c221e"/>
+                            <path d="M194 72 L230 72 L234 126 L190 126 Z" fill="#d98a3c" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M202 126 L202 164 M222 126 L222 164" stroke="#2c221e" stroke-width="6.5" stroke-linecap="round"/>
+                            <path d="M194 82 L156 94" stroke="#d98a3c" stroke-width="6.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 4.2 Panel 2 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">2.</span>
+                            <span class="text-xs text-stone-500">Question 6</span>
+                        </div>
+                        <div class="bubble-q mb-3">
+                            <div class="flex flex-wrap items-center gap-1.5 font-comic text-lg text-stone-900">
+                                <span>Where</span>
+                                <input type="text" id="q-4_2_2a" placeholder="..." aria-label="4.2.2 part 1" class="clean-input w-20 px-2 py-0.5 text-center text-base">
+                                <span>she</span>
+                                <input type="text" id="q-4_2_2b" placeholder="..." aria-label="4.2.2 part 2" class="clean-input w-24 px-2 py-0.5 text-center text-base">
+                                <span>?</span>
+                            </div>
+                            <p id="fb-4_2_2" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+                    </div>
+                    <!-- Warm Comic Art: Girl walking out EXIT door -->
+                    <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] bg-[#f5ebd9]">
+                        <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                            <rect width="320" height="150" fill="#f5ebd9"/>
+                            <rect x="0" y="150" width="320" height="40" fill="#d6c7b2"/>
+                            <line x1="0" y1="150" x2="320" y2="150" stroke="#2c221e" stroke-width="2"/>
+                            <!-- EXIT Sign & Door -->
+                            <rect x="26" y="16" width="42" height="16" rx="3" fill="#52796f" stroke="#2c221e" stroke-width="1.8"/>
+                            <text x="33" y="28" font-family="Inter" font-weight="800" font-size="10" fill="#fffdf9">EXIT</text>
+                            <rect x="22" y="36" width="56" height="114" fill="#fffdf9" stroke="#2c221e" stroke-width="2.2"/>
+                            <!-- Girl Walking Out -->
+                            <circle cx="94" cy="68" r="13" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M81 64 C83 50 105 50 107 64 Z" fill="#3d2817" stroke="#2c221e" stroke-width="1.8"/>
+                            <path d="M82 82 L106 82 L110 120 L78 120 Z" fill="#4a6572" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M88 120 L76 156 M100 120 L108 156" stroke="#2c221e" stroke-width="5.5" stroke-linecap="round"/>
+                            <!-- Two Classmates Watching -->
+                            <circle cx="198" cy="64" r="13.5" fill="#c68b59" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M184 80 L212 80 L216 120 L180 120 Z" fill="#c25934" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M190 120 L190 156 M206 120 L206 156" stroke="#b87a4b" stroke-width="5.5" stroke-linecap="round"/>
+
+                            <circle cx="258" cy="60" r="13.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M244 76 L272 76 L276 120 L240 120 Z" fill="#fffdf9" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M250 120 L250 156 M266 120 L266 156" stroke="#2c221e" stroke-width="5.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 4.2 Panel 3 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">3.</span>
+                            <span class="text-xs text-stone-500">Question 7</span>
+                        </div>
+                        <div class="bubble-q mb-3">
+                            <div class="flex flex-wrap items-center gap-1.5 font-comic text-lg text-stone-900">
+                                <span>What</span>
+                                <input type="text" id="q-4_2_3" placeholder="..." aria-label="4.2.3 answer" class="clean-input flex-1 min-w-[130px] px-2 py-0.5 text-base">
+                                <span>?</span>
+                            </div>
+                            <p id="fb-4_2_3" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+                    </div>
+                    <!-- Warm Comic Art: Guy eating a huge burger/sandwich -->
+                    <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] bg-[#efe0c6]">
+                        <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                            <rect width="320" height="190" fill="#efe0c6"/>
+                            <!-- Teen Boy Eating Huge Burger -->
+                            <circle cx="94" cy="70" r="16.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M77 64 C79 44 109 44 111 64 Z" fill="#3d2817" stroke="#2c221e" stroke-width="1.8"/>
+                            <path d="M72 88 L116 88 L122 176 L66 176 Z" fill="#4a6572" stroke="#2c221e" stroke-width="2"/>
+                            <!-- Giant Burger -->
+                            <path d="M88 74 Q104 60 120 74 Z" fill="#d98a3c" stroke="#2c221e" stroke-width="1.8"/>
+                            <rect x="87" y="74" width="34" height="5" fill="#6b8e67" stroke="#2c221e" stroke-width="1.2"/>
+                            <rect x="87" y="79" width="34" height="7" fill="#6f4e37" stroke="#2c221e" stroke-width="1.2"/>
+                            <path d="M88 86 L120 86 L118 93 L90 93 Z" fill="#d98a3c" stroke="#2c221e" stroke-width="1.8"/>
+                            <!-- Teen Girl Asking -->
+                            <path d="M209 68 C209 44 247 44 247 68 L250 96 L207 94 Z" fill="#7c4d2b" stroke="#2c221e" stroke-width="2"/>
+                            <circle cx="228" cy="72" r="16.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <circle cx="222" cy="72" r="1.8" fill="#2c221e"/>
+                            <path d="M208 90 L248 90 L254 176 L202 176 Z" fill="#c25934" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M208 104 L170 110" stroke="#f3c69f" stroke-width="6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 4.2 Panel 4 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">4.</span>
+                            <span class="text-xs text-stone-500">Question 8</span>
+                        </div>
+                        <div class="bubble-q mb-3">
+                            <div class="flex flex-wrap items-center gap-1.5 font-comic text-lg text-stone-900">
+                                <span>Why</span>
+                                <input type="text" id="q-4_2_4" placeholder="..." aria-label="4.2.4 answer" class="clean-input flex-1 min-w-[130px] px-2 py-0.5 text-base">
+                                <span>?</span>
+                            </div>
+                            <p id="fb-4_2_4" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+                    </div>
+                    <!-- Warm Comic Art: Kid crying, teen comforting -->
+                    <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] bg-[#f5ebd9]">
+                        <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                            <rect width="320" height="190" fill="#f5ebd9"/>
+                            <!-- Crying Younger Brother -->
+                            <circle cx="94" cy="104" r="15.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M78 98 C80 82 108 82 110 98 Z" fill="#5c3a21" stroke="#2c221e" stroke-width="1.8"/>
+                            <path d="M85 104 Q74 114 78 124" stroke="#5f9ea0" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M103 104 Q114 114 110 124" stroke="#5f9ea0" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <ellipse cx="94" cy="112" rx="5" ry="4" fill="#c25934" stroke="#2c221e" stroke-width="1.2"/>
+                            <path d="M78 122 L110 122 L114 176 L74 176 Z" fill="#6b8e67" stroke="#2c221e" stroke-width="2"/>
+                            <!-- Older Sister Comforting -->
+                            <path d="M188 64 C188 42 224 42 224 64 L230 98 L186 92 Z" fill="#3d2817" stroke="#2c221e" stroke-width="2"/>
+                            <circle cx="206" cy="68" r="15.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <circle cx="200" cy="68" r="1.7" fill="#2c221e"/>
+                            <path d="M186 86 L220 90 L234 154 L196 154 Z" fill="#fffdf9" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M188 98 L134 112" stroke="#f3c69f" stroke-width="6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 4.2 Panel 5 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">5.</span>
+                            <span class="text-xs text-stone-500">Question 9</span>
+                        </div>
+                        <div class="bubble-q mb-3">
+                            <div class="flex flex-wrap items-center gap-1.5 font-comic text-lg text-stone-900">
+                                <span>What</span>
+                                <input type="text" id="q-4_2_5" placeholder="..." aria-label="4.2.5 answer" class="clean-input flex-1 min-w-[130px] px-2 py-0.5 text-base">
+                                <span>?</span>
+                            </div>
+                            <p id="fb-4_2_5" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+                    </div>
+                    <!-- Warm Comic Art: Teens looking up at the sky -->
+                    <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] bg-[#e6dec8]">
+                        <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                            <rect width="320" height="190" fill="#e6dec8"/>
+                            <!-- Teen 1 pointing up -->
+                            <circle cx="92" cy="84" r="14.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M77 80 C79 64 105 64 107 80 Z" fill="#5c3a21" stroke="#2c221e" stroke-width="1.8"/>
+                            <path d="M75 100 L109 100 L114 178 L70 178 Z" fill="#4a6572" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M78 104 L42 54" stroke="#f3c69f" stroke-width="6" stroke-linecap="round"/>
+                            <!-- Teen 2 looking up -->
+                            <circle cx="152" cy="92" r="14.5" fill="#c68b59" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M137 88 C139 72 165 72 167 88 Z" fill="#3d2817" stroke="#2c221e" stroke-width="1.8"/>
+                            <path d="M135 108 L169 108 L174 178 L130 178 Z" fill="#d98a3c" stroke="#2c221e" stroke-width="2"/>
+                            <!-- Teen 3 & 4 watching -->
+                            <circle cx="228" cy="88" r="14" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M212 104 L244 104 L248 178 L208 178 Z" fill="#c25934" stroke="#2c221e" stroke-width="2"/>
+                            <circle cx="268" cy="82" r="14" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M253 98 L283 98 L288 178 L248 178 Z" fill="#3d312a" stroke="#2c221e" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 4.2 Panel 6 -->
+                <div class="comic-panel-box p-3.5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-stone-700">6.</span>
+                            <span class="text-xs text-stone-500">Question 10</span>
+                        </div>
+                        <div class="bubble-q mb-3">
+                            <div class="flex flex-wrap items-center gap-1.5 font-comic text-lg text-stone-900">
+                                <span>Why</span>
+                                <input type="text" id="q-4_2_6" placeholder="..." aria-label="4.2.6 answer" class="clean-input flex-1 min-w-[130px] px-2 py-0.5 text-base">
+                                <span>?</span>
+                            </div>
+                            <p id="fb-4_2_6" class="hidden text-xs font-semibold mt-1"></p>
+                        </div>
+                    </div>
+                    <!-- Warm Comic Art: Guy laughing, two girls confused -->
+                    <div class="rounded-lg overflow-hidden border-2 border-[#2c221e] bg-[#f2e2c9]">
+                        <svg viewBox="0 0 320 190" class="w-full h-auto block">
+                            <rect width="320" height="190" fill="#f2e2c9"/>
+                            <text x="18" y="38" font-family="Comic Neue" font-weight="700" font-size="18" fill="#5c3a21" transform="rotate(-10 18 38)">Ha ha ha!</text>
+                            <!-- Guy laughing -->
+                            <circle cx="94" cy="94" r="22" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M72 84 C76 62 112 62 116 84 Z" fill="#3d2817" stroke="#2c221e" stroke-width="1.8"/>
+                            <path d="M84 98 Q98 116 110 96 Z" fill="#c25934" stroke="#2c221e" stroke-width="1.8"/>
+                            <path d="M66 118 L122 118 L130 180 L58 180 Z" fill="#6b8e67" stroke="#2c221e" stroke-width="2"/>
+                            <!-- Two girls confused -->
+                            <circle cx="208" cy="84" r="14.5" fill="#c68b59" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M193 102 L223 102 L226 176 L190 176 Z" fill="#fffdf9" stroke="#2c221e" stroke-width="2"/>
+                            <circle cx="264" cy="82" r="14.5" fill="#f3c69f" stroke="#2c221e" stroke-width="2"/>
+                            <path d="M249 100 L279 100 L282 176 L246 176 Z" fill="#4a6572" stroke="#2c221e" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =================================================================
+             EXERCISE 4.3 — WORD ORDER
+        ================================================================== -->
+        <section class="sheet-card p-5 sm:p-6 space-y-5">
+            <div class="border-b border-stone-100 pb-3">
+                <span class="inline-block bg-amber-100/80 text-amber-900 font-bold text-xs px-2.5 py-1 rounded-md mb-1">Exercise 4.3</span>
+                <h2 class="text-lg sm:text-xl font-bold text-stone-900">Make questions with these words. Put the words in the right order.</h2>
+                <p class="text-xs text-stone-500 mt-0.5">Tap the word buttons to build the question, or type directly.</p>
+            </div>
+
+            <!-- Examples 1 & 2 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-stone-50 p-4 rounded-xl border border-stone-200">
+                <div>
+                    <span class="text-xs font-semibold text-stone-500">1. (is / working / Ben / today)</span>
+                    <p class="font-comic text-lg text-emerald-800">Is Ben working today?</p>
+                </div>
+                <div>
+                    <span class="text-xs font-semibold text-stone-500">2. (what / the children / are / doing)</span>
+                    <p class="font-comic text-lg text-emerald-800">What are the children doing?</p>
+                </div>
+            </div>
+
+            <div id="scramble-container" class="space-y-4">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- =================================================================
+             EXERCISE 4.4 — SHORT ANSWERS
+        ================================================================== -->
+        <section class="sheet-card p-5 sm:p-6 space-y-5">
+            <div class="border-b border-stone-100 pb-3">
+                <span class="inline-block bg-amber-100/80 text-amber-900 font-bold text-xs px-2.5 py-1 rounded-md mb-1">Exercise 4.4</span>
+                <h2 class="text-lg sm:text-xl font-bold text-stone-900">Write short answers (Yes, I am. / No, he isn't., etc.).</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- 4.4 - 1 (Example) -->
+                <div class="p-4 bg-stone-50 border border-stone-200 rounded-xl">
+                    <p class="font-semibold text-stone-800 mb-1">1. Are you watching TV? <span class="text-xs font-normal text-emerald-800 ml-1">(Example)</span></p>
+                    <p class="font-comic text-lg text-emerald-800">No, I'm not.</p>
+                </div>
+
+                <!-- 4.4 - 2 -->
+                <div class="p-4 bg-white border border-stone-200 rounded-xl">
+                    <label for="q-4_4_2" class="block font-semibold text-stone-800 mb-2">2. Are you wearing a watch?</label>
+                    <div class="flex gap-2 mb-2">
+                        <button type="button" onclick="fillShort('q-4_4_2', 'Yes, I am.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">Yes, I am.</button>
+                        <button type="button" onclick="fillShort('q-4_4_2', 'No, I\'m not.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">No, I'm not.</button>
+                    </div>
+                    <input type="text" id="q-4_4_2" placeholder="Your short answer..." class="clean-input w-full px-3 py-1.5 text-base">
+                    <p id="fb-4_4_2" class="hidden text-xs font-semibold mt-1"></p>
+                </div>
+
+                <!-- 4.4 - 3 -->
+                <div class="p-4 bg-white border border-stone-200 rounded-xl">
+                    <label for="q-4_4_3" class="block font-semibold text-stone-800 mb-2">3. Are you eating something?</label>
+                    <div class="flex gap-2 mb-2">
+                        <button type="button" onclick="fillShort('q-4_4_3', 'Yes, I am.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">Yes, I am.</button>
+                        <button type="button" onclick="fillShort('q-4_4_3', 'No, I\'m not.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">No, I'm not.</button>
+                    </div>
+                    <input type="text" id="q-4_4_3" placeholder="Your short answer..." class="clean-input w-full px-3 py-1.5 text-base">
+                    <p id="fb-4_4_3" class="hidden text-xs font-semibold mt-1"></p>
+                </div>
+
+                <!-- 4.4 - 4 -->
+                <div class="p-4 bg-white border border-stone-200 rounded-xl">
+                    <label for="q-4_4_4" class="block font-semibold text-stone-800 mb-2">4. Is it raining?</label>
+                    <div class="flex gap-2 mb-2">
+                        <button type="button" onclick="fillShort('q-4_4_4', 'Yes, it is.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">Yes, it is.</button>
+                        <button type="button" onclick="fillShort('q-4_4_4', 'No, it isn\'t.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">No, it isn't.</button>
+                    </div>
+                    <input type="text" id="q-4_4_4" placeholder="Your short answer..." class="clean-input w-full px-3 py-1.5 text-base">
+                    <p id="fb-4_4_4" class="hidden text-xs font-semibold mt-1"></p>
+                </div>
+
+                <!-- 4.4 - 5 -->
+                <div class="p-4 bg-white border border-stone-200 rounded-xl">
+                    <label for="q-4_4_5" class="block font-semibold text-stone-800 mb-2">5. Are you sitting on the floor?</label>
+                    <div class="flex gap-2 mb-2">
+                        <button type="button" onclick="fillShort('q-4_4_5', 'Yes, I am.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">Yes, I am.</button>
+                        <button type="button" onclick="fillShort('q-4_4_5', 'No, I\'m not.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">No, I'm not.</button>
+                    </div>
+                    <input type="text" id="q-4_4_5" placeholder="Your short answer..." class="clean-input w-full px-3 py-1.5 text-base">
+                    <p id="fb-4_4_5" class="hidden text-xs font-semibold mt-1"></p>
+                </div>
+
+                <!-- 4.4 - 6 -->
+                <div class="p-4 bg-white border border-stone-200 rounded-xl">
+                    <label for="q-4_4_6" class="block font-semibold text-stone-800 mb-2">6. Are you feeling all right?</label>
+                    <div class="flex gap-2 mb-2">
+                        <button type="button" onclick="fillShort('q-4_4_6', 'Yes, I am.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">Yes, I am.</button>
+                        <button type="button" onclick="fillShort('q-4_4_6', 'No, I\'m not.')" class="text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-700 px-2.5 py-1 rounded-md">No, I'm not.</button>
+                    </div>
+                    <input type="text" id="q-4_4_6" placeholder="Your short answer..." class="clean-input w-full px-3 py-1.5 text-base">
+                    <p id="fb-4_4_6" class="hidden text-xs font-semibold mt-1"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submit & Result Collection Card -->
+        <section class="sheet-card p-6 text-center space-y-4">
+            <h3 class="text-lg font-bold text-stone-900">Finished your homework?</h3>
+            <p class="text-sm text-stone-600 max-w-lg mx-auto">
+                Click below to check your answers. Your score and mistakes will be sent to your teacher automatically, and you can also copy your result summary below.
+            </p>
+            <div>
+                <button id="submit-btn" onclick="submitWorksheet()" class="bg-amber-700 hover:bg-amber-800 text-white font-semibold text-base px-7 py-3.5 rounded-xl shadow-sm transition cursor-pointer">
+                    Finish & Send Homework Results
+                </button>
+            </div>
+
+            <!-- Student Result Summary Box -->
+            <div id="student-result-card" class="hidden mt-6 bg-stone-50 border border-stone-200 rounded-2xl p-5 max-w-xl mx-auto text-left space-y-4">
+                <div class="flex items-center justify-between border-b border-stone-200 pb-3">
+                    <div>
+                        <span class="text-xs font-semibold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">Submitted</span>
+                        <h4 id="result-headline" class="text-lg font-bold text-stone-900 mt-1">Homework Complete!</h4>
+                    </div>
+                    <div class="text-right">
+                        <span class="block text-xs text-stone-500">Score</span>
+                        <span id="result-score-display" class="text-2xl font-bold text-amber-800">0 / 21</span>
+                    </div>
+                </div>
+
+                <!-- Summary text & Easy Share buttons for Student -->
+                <div>
+                    <label class="block text-xs font-semibold text-stone-600 mb-1">Your Homework Report (ready to paste in chat/email if needed):</label>
+                    <textarea id="student-report-text" readonly rows="5" class="w-full text-xs font-mono bg-white border border-stone-300 rounded-lg p-2.5 text-stone-700"></textarea>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="copyStudentReport()" class="bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold px-4 py-2 rounded-lg">
+                        Copy Report to Send to Teacher
+                    </button>
+                    <button type="button" onclick="downloadStudentReport()" class="bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-semibold px-4 py-2 rounded-lg">
+                        Download .TXT Result
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discrete Footer with Teacher-Only Access Link -->
+        <footer class="text-center pt-2 pb-6 text-xs text-stone-400">
+            <span>Unit 4 — Present Continuous Practice</span>
+            <span class="mx-2">•</span>
+            <button type="button" onclick="openPinModal()" class="text-stone-400 hover:text-stone-600 underline cursor-pointer">
+                Teacher
+            </button>
+        </footer>
+
+    </main>
+
+    <!-- =====================================================================
+         TEACHER RESULTS VIEW (HIDDEN FROM STUDENTS UNLESS UNLOCKED)
+    ====================================================================== -->
+    <main id="teacher-view" class="hidden max-w-5xl mx-auto px-4 pt-6 space-y-6">
+        
+        <div class="sheet-card p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-stone-900">Collected Homework Results</h2>
+                    <p class="text-sm text-stone-600">See who completed the worksheet, their score, and the exact mistakes they made.</p>
+                </div>
+                <button onclick="exportAllCsv()" class="bg-stone-900 hover:bg-stone-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl">
+                    Export Results (CSV)
+                </button>
+            </div>
+
+            <!-- Simple Summary Row -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-5 pt-5 border-t border-stone-100">
+                <div>
+                    <span class="text-xs font-medium text-stone-500">Students Submitted</span>
+                    <p id="stat-total-students" class="text-2xl font-bold text-stone-900 mt-0.5">0</p>
+                </div>
+                <div>
+                    <span class="text-xs font-medium text-stone-500">Average Score</span>
+                    <p id="stat-avg-score" class="text-2xl font-bold text-amber-700 mt-0.5">--%</p>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                    <span class="text-xs font-medium text-stone-500">Most Frequent Mistake</span>
+                    <p id="stat-top-mistake" class="text-sm font-semibold text-rose-600 mt-1">None yet</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Results List -->
+        <div id="submissions-list" class="space-y-4">
+            <div class="sheet-card p-8 text-center">
+                <p class="font-semibold text-stone-700">No homework results collected yet.</p>
+                <p class="text-sm text-stone-500 mt-1">Once students submit their worksheet, their names, scores, and mistakes will appear here.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- =====================================================================
+         FIREBASE STORAGE & GRADING LOGIC
+    ====================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'present-continuous-unit4';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        let localFallbackSubmissions = [];
+        window.allCollectedSubmissions = [];
+
+        async function initBackend() {
+            if (!firebaseConfig) return;
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                    if (user) {
+                        listenToSubmissions();
+                    }
+                });
+            } catch (err) {
+                console.error("Backend init error:", err);
+            }
+        }
+
+        function listenToSubmissions() {
+            if (!db || !currentUser) return;
+            const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'worksheet_submissions');
+            
+            onSnapshot(colRef, (snapshot) => {
+                const items = [];
+                snapshot.forEach(doc => {
+                    items.push({ id: doc.id, ...doc.data() });
+                });
+                items.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                window.allCollectedSubmissions = items;
+                renderTeacherDashboard(items);
+            }, (error) => {
+                console.error("Snapshot listener error:", error);
+            });
+        }
+
+        window.saveSubmissionToCloud = async function(submissionPayload) {
+            if (db && currentUser) {
+                try {
+                    const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'worksheet_submissions');
+                    await addDoc(colRef, submissionPayload);
+                    return true;
+                } catch (err) {
+                    console.error("Error saving:", err);
+                    return false;
+                }
+            } else {
+                localFallbackSubmissions.unshift(submissionPayload);
+                window.allCollectedSubmissions = localFallbackSubmissions;
+                renderTeacherDashboard(localFallbackSubmissions);
+                return true;
+            }
+        };
+
+        initBackend();
+    </script>
+
+    <script>
+        const scrambleExercises = [
+            {
+                id: '4_3_3',
+                num: 3,
+                words: ['you', 'are', 'listening', 'to me'],
+                accepted: ['are you listening to me?', 'are you listening to me']
+            },
+            {
+                id: '4_3_4',
+                num: 4,
+                words: ['where', 'your friends', 'are', 'going'],
+                accepted: ['where are your friends going?', 'where are your friends going']
+            },
+            {
+                id: '4_3_5',
+                num: 5,
+                words: ['are', 'watching', 'your parents', 'TV'],
+                accepted: ['are your parents watching tv?', 'are your parents watching tv']
+            },
+            {
+                id: '4_3_6',
+                num: 6,
+                words: ['what', 'Jessica', 'is', 'cooking'],
+                accepted: ['what is jessica cooking?', 'what is jessica cooking', "what's jessica cooking?", "what's jessica cooking"]
+            },
+            {
+                id: '4_3_7',
+                num: 7,
+                words: ['why', 'you', 'are', 'looking', 'at me'],
+                accepted: ['why are you looking at me?', 'why are you looking at me']
+            },
+            {
+                id: '4_3_8',
+                num: 8,
+                words: ['is', 'coming', 'the bus'],
+                accepted: ['is the bus coming?', 'is the bus coming']
+            }
+        ];
+
+        function renderScrambleItems() {
+            const container = document.getElementById('scramble-container');
+            container.innerHTML = scrambleExercises.map(item => `
+                <div class="p-4 bg-white border border-slate-200 rounded-xl space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-semibold text-slate-700">${item.num}. (${item.words.join(' / ')})</span>
+                        <button type="button" onclick="clearScramble('${item.id}')" class="text-xs font-medium text-slate-400 hover:text-rose-600">Clear</button>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5">
+                        ${item.words.map(w => `
+                            <button type="button" onclick="appendWord('${item.id}', '${w.replace(/'/g, "\\'")}')" class="word-pill font-comic text-base text-slate-800 px-3 py-1">
+                                ${w}
+                            </button>
+                        `).join('')}
+                        <button type="button" onclick="appendWord('${item.id}', '?')" class="word-pill font-comic text-base text-blue-700 px-3 py-1">
+                            ?
+                        </button>
+                    </div>
+                    <input type="text" id="q-${item.id}" placeholder="Write the question..." class="clean-input w-full px-3 py-1.5 text-base">
+                    <p id="fb-${item.id}" class="hidden text-xs font-semibold"></p>
+                </div>
+            `).join('');
+        }
+
+        window.appendWord = function(id, word) {
+            const input = document.getElementById(`q-${id}`);
+            let current = input.value.trim();
+            if (word === '?') {
+                input.value = current + '?';
+                return;
+            }
+            if (current === '') {
+                input.value = word.charAt(0).toUpperCase() + word.slice(1);
+            } else {
+                input.value = current + ' ' + word;
+            }
+        };
+
+        window.clearScramble = function(id) {
+            document.getElementById(`q-${id}`).value = '';
+        };
+
+        window.fillShort = function(inputId, text) {
+            document.getElementById(inputId).value = text;
+        };
+
+        function normalizeText(str) {
+            return (str || '')
+                .toLowerCase()
+                .replace(/[’‘`]/g, "'")
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function showToast(title, msg, icon = '✓') {
+            const box = document.getElementById('toast-box');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-msg').textContent = msg;
+            document.getElementById('toast-icon').textContent = icon;
+            box.classList.remove('hidden');
+            setTimeout(() => box.classList.add('hidden'), 4000);
+        }
+
+        window.submitWorksheet = async function() {
+            const studentName = document.getElementById('student-name').value.trim();
+            const studentClass = document.getElementById('student-class').value.trim() || 'General';
+
+            if (!studentName) {
+                showToast('Name Required', 'Please enter your full name at the top of the page.', '!');
+                document.getElementById('student-name').focus();
+                document.getElementById('student-name').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            const mistakes = [];
+            let score = 0;
+            const totalQuestions = 21;
+
+            function evaluateItem(exLabel, promptText, studentRaw, acceptedList, displayCorrect, fbElementId, inputIds) {
+                const norm = normalizeText(studentRaw);
+                const normNoQ = norm.replace(/\?+$/, '').trim();
+                
+                const isCorrect = acceptedList.some(ans => {
+                    const aNorm = normalizeText(ans);
+                    const aNoQ = aNorm.replace(/\?+$/, '').trim();
+                    return norm === aNorm || normNoQ === aNoQ;
+                });
+
+                const fbEl = document.getElementById(fbElementId);
+                if (isCorrect) {
+                    score++;
+                    if (fbEl) {
+                        fbEl.className = 'text-xs font-semibold text-emerald-700 mt-1 block';
+                        fbEl.textContent = 'Correct';
+                    }
+                    inputIds.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.classList.add('bg-emerald-50', 'border-emerald-500');
+                    });
+                } else {
+                    mistakes.push({
+                        exercise: exLabel,
+                        prompt: promptText,
+                        studentAnswer: studentRaw.trim() || '(No answer)',
+                        correctAnswer: displayCorrect
+                    });
+                    if (fbEl) {
+                        fbEl.className = 'text-xs font-semibold text-rose-600 mt-1 block';
+                        fbEl.textContent = `Correct answer: ${displayCorrect}`;
+                    }
+                    inputIds.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.classList.add('bg-rose-50', 'border-rose-500');
+                    });
+                }
+            }
+
+            // 4.1
+            const ex41 = [
+                { id: '4_1_2', label: '4.1 #2', prompt: '(you / leave / now?)', accepted: ['are you leaving now?'], correct: 'Are you leaving now?' },
+                { id: '4_1_3', label: '4.1 #3', prompt: '(it / rain?)', accepted: ['is it raining?'], correct: 'Is it raining?' },
+                { id: '4_1_4', label: '4.1 #4', prompt: '(you / enjoy / the movie?)', accepted: ['are you enjoying the movie?', 'are you enjoying the film?'], correct: 'Are you enjoying the movie?' },
+                { id: '4_1_5', label: '4.1 #5', prompt: '(that clock / work?)', accepted: ['is that clock working?'], correct: 'Is that clock working?' },
+                { id: '4_1_6', label: '4.1 #6', prompt: '(you / wait / for a bus?)', accepted: ['are you waiting for a bus?'], correct: 'Are you waiting for a bus?' }
+            ];
+            ex41.forEach(q => {
+                evaluateItem(q.label, q.prompt, document.getElementById(`q-${q.id}`).value, q.accepted, q.correct, `fb-${q.id}`, [`q-${q.id}`]);
+            });
+
+            // 4.2
+            const v422a = document.getElementById('q-4_2_2a').value.trim();
+            const v422b = document.getElementById('q-4_2_2b').value.trim();
+            evaluateItem(
+                '4.2 #2',
+                'Where ___ she ___ ?',
+                (v422a || v422b) ? `Where ${v422a} she ${v422b}?` : '',
+                ['where is she going?'],
+                'Where is she going?',
+                'fb-4_2_2',
+                ['q-4_2_2a', 'q-4_2_2b']
+            );
+
+            const ex42Rest = [
+                { id: '4_2_3', prefix: 'What ', label: '4.2 #3', prompt: 'What ___ ? (eat)', accepted: ['what are you eating?'], correct: 'What are you eating?' },
+                { id: '4_2_4', prefix: 'Why ', label: '4.2 #4', prompt: 'Why ___ ? (cry)', accepted: ['why are you crying?', 'why is he crying?', 'why is she crying?', 'why is the boy crying?', 'why is the child crying?'], correct: 'Why are you crying?' },
+                { id: '4_2_5', prefix: 'What ', label: '4.2 #5', prompt: 'What ___ ? (look at)', accepted: ['what are they looking at?', 'what are you looking at?'], correct: 'What are they looking at?' },
+                { id: '4_2_6', prefix: 'Why ', label: '4.2 #6', prompt: 'Why ___ ? (laugh)', accepted: ['why is he laughing?', 'why are you laughing?'], correct: 'Why is he laughing?' }
+            ];
+            ex42Rest.forEach(q => {
+                const rawInput = document.getElementById(`q-${q.id}`).value.trim();
+                let fullAttempt = rawInput;
+                if (rawInput && !normalizeText(rawInput).startsWith(normalizeText(q.prefix.trim()))) {
+                    fullAttempt = q.prefix + rawInput;
+                }
+                evaluateItem(q.label, q.prompt, fullAttempt, q.accepted, q.correct, `fb-${q.id}`, [`q-${q.id}`]);
+            });
+
+            // 4.3
+            scrambleExercises.forEach(item => {
+                evaluateItem(
+                    `4.3 #${item.num}`,
+                    `(${item.words.join(' / ')})`,
+                    document.getElementById(`q-${item.id}`).value,
+                    item.accepted,
+                    item.accepted[0].charAt(0).toUpperCase() + item.accepted[0].slice(1),
+                    `fb-${item.id}`,
+                    [`q-${item.id}`]
+                );
+            });
+
+            // 4.4
+            const ex44 = [
+                { id: '4_4_2', label: '4.4 #2', prompt: 'Are you wearing a watch?', accepted: ['yes, i am.', 'yes, i am', "no, i'm not.", "no, i'm not", 'no, i am not.', 'no, i am not'], correct: "Yes, I am. / No, I'm not." },
+                { id: '4_4_3', label: '4.4 #3', prompt: 'Are you eating something?', accepted: ['yes, i am.', 'yes, i am', "no, i'm not.", "no, i'm not", 'no, i am not.', 'no, i am not'], correct: "Yes, I am. / No, I'm not." },
+                { id: '4_4_4', label: '4.4 #4', prompt: 'Is it raining?', accepted: ['yes, it is.', 'yes, it is', "no, it isn't.", "no, it isn't", "no, it's not.", "no, it's not", 'no, it is not.', 'no, it is not'], correct: "Yes, it is. / No, it isn't." },
+                { id: '4_4_5', label: '4.4 #5', prompt: 'Are you sitting on the floor?', accepted: ['yes, i am.', 'yes, i am', "no, i'm not.", "no, i'm not", 'no, i am not.', 'no, i am not'], correct: "Yes, I am. / No, I'm not." },
+                { id: '4_4_6', label: '4.4 #6', prompt: 'Are you feeling all right?', accepted: ['yes, i am.', 'yes, i am', "no, i'm not.", "no, i'm not", 'no, i am not.', 'no, i am not'], correct: "Yes, I am. / No, I'm not." }
+            ];
+            ex44.forEach(q => {
+                evaluateItem(q.label, q.prompt, document.getElementById(`q-${q.id}`).value, q.accepted, q.correct, `fb-${q.id}`, [`q-${q.id}`]);
+            });
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const submittedAt = new Date().toLocaleString();
+            const payload = {
+                studentName,
+                studentClass,
+                score,
+                totalQuestions,
+                percentage,
+                mistakes,
+                timestamp: Date.now(),
+                submittedAt
+            };
+
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+
+            await window.saveSubmissionToCloud(payload);
+
+            btn.disabled = false;
+            btn.textContent = 'Finish & Send Homework Results';
+
+            // Build plain-text report for easy copying/sending
+            const mistakeLines = mistakes.length > 0
+                ? mistakes.map(m => `- ${m.exercise}: wrote "${m.studentAnswer}" (Correct: ${m.correctAnswer})`).join('\n')
+                : '- None! 100% correct.';
+            const reportText = `UNIT 4 HOMEWORK RESULT\nStudent: ${studentName} (${studentClass})\nScore: ${score}/${totalQuestions} (${percentage}%)\nDate: ${submittedAt}\nMistakes:\n${mistakeLines}`;
+
+            document.getElementById('student-report-text').value = reportText;
+            document.getElementById('result-score-display').textContent = `${score} / ${totalQuestions} (${percentage}%)`;
+            document.getElementById('result-headline').textContent = `Thank you, ${studentName}!`;
+
+            const resCard = document.getElementById('student-result-card');
+            resCard.classList.remove('hidden');
+            resCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            showToast('Results Saved', 'Your homework has been recorded for your teacher.', '✓');
+        };
+
+        window.copyStudentReport = function() {
+            const textarea = document.getElementById('student-report-text');
+            textarea.select();
+            document.execCommand('copy');
+            showToast('Copied!', 'Report copied. You can paste and send it to your teacher.', '📋');
+        };
+
+        window.downloadStudentReport = function() {
+            const text = document.getElementById('student-report-text').value;
+            const studentName = document.getElementById('student-name').value.trim().replace(/\s+/g, '_') || 'Student';
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Unit4_Homework_${studentName}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+
+        window.renderTeacherDashboard = function(submissions) {
+            const badge = document.getElementById('submission-badge');
+            badge.textContent = submissions.length;
+            if (submissions.length > 0) badge.classList.remove('hidden');
+
+            document.getElementById('stat-total-students').textContent = submissions.length;
+            if (submissions.length === 0) return;
+
+            const avg = Math.round(submissions.reduce((acc, s) => acc + (s.percentage || 0), 0) / submissions.length);
+            document.getElementById('stat-avg-score').textContent = `${avg}%`;
+
+            const mistakeCounts = {};
+            submissions.forEach(s => {
+                (s.mistakes || []).forEach(m => {
+                    const key = `${m.exercise} ${m.prompt}`;
+                    mistakeCounts[key] = (mistakeCounts[key] || 0) + 1;
+                });
+            });
+
+            const sortedMistakes = Object.entries(mistakeCounts).sort((a, b) => b[1] - a[1]);
+            document.getElementById('stat-top-mistake').textContent = sortedMistakes.length > 0
+                ? `${sortedMistakes[0][0]} (${sortedMistakes[0][1]}x)`
+                : 'None (100% average)';
+
+            const listEl = document.getElementById('submissions-list');
+            listEl.innerHTML = submissions.map(sub => {
+                const scoreColor = sub.percentage >= 80 ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : sub.percentage >= 60 ? 'text-amber-700 bg-amber-50 border-amber-200' : 'text-rose-700 bg-rose-50 border-rose-200';
+                const mistakesHtml = (sub.mistakes && sub.mistakes.length > 0)
+                    ? `
+                        <div class="mt-4 pt-3 border-t border-slate-100">
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Mistakes (${sub.mistakes.length}):</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                ${sub.mistakes.map(m => `
+                                    <div class="bg-rose-50/70 border border-rose-200 rounded-lg p-2.5 text-xs">
+                                        <span class="font-bold text-slate-800">${escapeHtml(m.exercise)}</span> <span class="text-slate-500">${escapeHtml(m.prompt)}</span>
+                                        <div class="mt-1 text-rose-700">Wrote: <span class="font-semibold line-through">${escapeHtml(m.studentAnswer)}</span></div>
+                                        <div class="text-emerald-700">Expected: <span class="font-semibold">${escapeHtml(m.correctAnswer)}</span></div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `
+                    : `<p class="mt-3 text-xs font-medium text-emerald-700">No mistakes — 100% correct.</p>`;
+
+                return `
+                    <div class="sheet-card p-5">
+                        <div class="flex flex-wrap items-center justify-between gap-3">
+                            <div>
+                                <h3 class="font-bold text-base text-slate-900">
+                                    ${escapeHtml(sub.studentName)}
+                                    <span class="ml-2 text-xs font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded">${escapeHtml(sub.studentClass || 'General')}</span>
+                                </h3>
+                                <p class="text-xs text-slate-400 mt-0.5">${escapeHtml(sub.submittedAt || '')}</p>
+                            </div>
+                            <div class="border px-3.5 py-1.5 rounded-xl font-bold text-sm ${scoreColor}">
+                                ${sub.score} / ${sub.totalQuestions} (${sub.percentage}%)
+                            </div>
+                        </div>
+                        ${mistakesHtml}
+                    </div>
+                `;
+            }).join('');
+        };
+
+        window.exportAllCsv = function() {
+            const subs = window.allCollectedSubmissions || [];
+            if (subs.length === 0) {
+                showToast('No Data', 'No student results to export yet.', '!');
+                return;
+            }
+            const rows = [['Student Name', 'Class', 'Score', 'Total', 'Percentage', 'Submitted At', 'Mistakes']];
+            subs.forEach(s => {
+                const mistakeStr = (s.mistakes || []).map(m => `${m.exercise}: "${m.studentAnswer}" -> ${m.correctAnswer}`).join(' | ') || 'None';
+                rows.push([
+                    `"${(s.studentName || '').replace(/"/g, '""')}"`,
+                    `"${(s.studentClass || '').replace(/"/g, '""')}"`,
+                    s.score,
+                    s.totalQuestions,
+                    `${s.percentage}%`,
+                    `"${(s.submittedAt || '').replace(/"/g, '""')}"`,
+                    `"${mistakeStr.replace(/"/g, '""')}"`
+                ]);
+            });
+            const csv = rows.map(r => r.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Unit4_Homework_Results.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        window.switchView = function(view) {
+            const studentView = document.getElementById('student-view');
+            const teacherView = document.getElementById('teacher-view');
+            const btnStudent = document.getElementById('btn-student-view');
+            const btnTeacher = document.getElementById('btn-teacher-view');
+
+            if (view === 'teacher') {
+                studentView.classList.add('hidden');
+                teacherView.classList.remove('hidden');
+                btnTeacher.className = 'px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-white text-stone-900 shadow-sm transition flex items-center gap-1.5';
+                btnStudent.className = 'px-3.5 py-1.5 rounded-lg text-sm font-semibold text-stone-600 hover:text-stone-900 transition';
+            } else {
+                teacherView.classList.add('hidden');
+                studentView.classList.remove('hidden');
+                btnStudent.className = 'px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-white text-stone-900 shadow-sm transition';
+                btnTeacher.className = 'px-3.5 py-1.5 rounded-lg text-sm font-semibold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5';
+            }
+        };
+
+        // Teacher PIN Protection (Students do NOT see the Teacher Results tab)
+        const TEACHER_PIN = '7791';
+
+        window.openPinModal = function() {
+            document.getElementById('pin-error').classList.add('hidden');
+            document.getElementById('teacher-pin-input').value = '';
+            document.getElementById('pin-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('teacher-pin-input').focus(), 50);
+        };
+
+        window.closePinModal = function() {
+            document.getElementById('pin-modal').classList.add('hidden');
+        };
+
+        window.verifyTeacherPin = function() {
+            const val = document.getElementById('teacher-pin-input').value.trim();
+            if (val === TEACHER_PIN) {
+                closePinModal();
+                document.getElementById('teacher-nav-bar').classList.remove('hidden');
+                switchView('teacher');
+            } else {
+                document.getElementById('pin-error').classList.remove('hidden');
+            }
+        };
+
+        // Allow teacher to open directly with ?teacher=1 in URL (still prompts PIN)
+        if (new URLSearchParams(window.location.search).get('teacher') === '1') {
+            openPinModal();
+        }
+
+        renderScrambleItems();
+    </script>
+</body>
+</html>
