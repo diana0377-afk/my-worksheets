@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Present Continuous vs. Present Simple Quiz (A1+)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- Top Header & Progress Bar -->
+  <header class="w-full bg-white border-b border-zinc-200 sticky top-0 z-10">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-extrabold text-sm shadow-sm">
+          A1+
+        </div>
+        <div>
+          <h1 class="text-sm sm:text-base font-extrabold text-zinc-900 leading-tight">I Am Doing vs. I Do</h1>
+          <p class="text-xs text-zinc-500 font-medium">Grammar Boss Battle</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span id="score-pill" class="bg-orange-50 text-orange-600 border border-orange-200 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-full">
+          Score: 0
+        </span>
+        <span id="progress-text" class="bg-indigo-50 text-indigo-700 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-full">
+          1 / 12
+        </span>
+      </div>
+    </div>
+    <!-- Progress Bar -->
+    <div class="w-full h-1.5 bg-zinc-100">
+      <div id="progress-bar" class="h-full bg-indigo-600 transition-all duration-300" style="width: 8.33%;"></div>
+    </div>
+  </header>
+
+  <!-- Main Quiz Area -->
+  <main class="w-full max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10 flex-grow flex items-center justify-center">
+    <div id="quiz-container" class="w-full bg-white rounded-3xl border border-zinc-200 shadow-sm p-6 sm:p-10 transition-all">
+      <!-- Dynamic Content Injected Here -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full text-center py-4 text-xs text-zinc-400 font-medium">
+    Present Continuous vs. Present Simple • A1+ Practice
+  </footer>
+
+  <script>
+    // 12 Questions covering Multiple Choice, Fill in the Gaps, Matching, and Spot the Fail
+    const quizQuestions = [
+      {
+        type: "mcq",
+        typeLabel: "Multiple Choice",
+        prompt: "Look! Jack ______ TV right now, so his guitar is just sitting in the corner.",
+        options: ["watches", "is watching", "watching"],
+        correct: 1,
+        explanation: "'Look!' and 'right now' tell us the action is happening at this exact second → Present Continuous."
+      },
+      {
+        type: "gap",
+        typeLabel: "Fill in the Gap",
+        before: "Jack has an awesome guitar, and he ",
+        hint: "(play)",
+        after: " it really well every day.",
+        accepted: ["plays"],
+        displayAnswer: "plays",
+        explanation: "'Every day' is a regular habit or ability → Present Simple (add -s for he/she/it)."
+      },
+      {
+        type: "mcq",
+        typeLabel: "Multiple Choice",
+        prompt: "Shh! Please be quiet! I ______ to beat the final boss in this game.",
+        options: ["try", "am trying", "tries"],
+        correct: 1,
+        explanation: "You are in the middle of the battle right now → Present Continuous (I am trying)."
+      },
+      {
+        type: "match",
+        typeLabel: "Tap to Match",
+        prompt: "Match each sentence starter on the left with the best ending on the right.",
+        pairs: [
+          { left: "Take an umbrella!", right: "It's raining super hard outside." },
+          { left: "In winter,", right: "it rains a lot in this city." },
+          { left: "Turn off the TV —", right: "nobody is watching it." }
+        ],
+        explanation: "Right-now situations use Present Continuous ('It's raining' / 'is watching'), while general seasonal facts use Present Simple ('it rains')."
+      },
+      {
+        type: "gap",
+        typeLabel: "Fill in the Gap",
+        before: "My lazy cat ",
+        hint: "(sleep)",
+        after: " on my warm laptop keyboard every morning.",
+        accepted: ["sleeps"],
+        displayAnswer: "sleeps",
+        explanation: "'Every morning' shows a daily routine → Present Simple ('sleeps')."
+      },
+      {
+        type: "mcq",
+        typeLabel: "Multiple Choice",
+        prompt: "I'm super tired after school. I ______ to go home and nap right now.",
+        options: ["am wanting", "want", "wants"],
+        correct: 1,
+        explanation: "Trap alert! 'Want' is in the No -ing VIP Club. Even with 'right now', we always say 'I want'."
+      },
+      {
+        type: "gap",
+        typeLabel: "Fill in the Gap",
+        before: "Why are you hiding under the desk? What ",
+        hint: "(you / do)",
+        after: " down there?",
+        accepted: ["are you doing", "r u doing"],
+        displayAnswer: "are you doing",
+        explanation: "Asking about a weird action happening at the moment of speaking → Present Continuous question ('are you doing')."
+      },
+      {
+        type: "mcq",
+        typeLabel: "Multiple Choice",
+        prompt: "What ______ your best friend usually ______ on weekends?",
+        options: ["is / doing", "does / do", "do / does"],
+        correct: 1,
+        explanation: "'Usually' and 'on weekends' ask about a regular routine → Present Simple question ('does ... do')."
+      },
+      {
+        type: "match",
+        typeLabel: "Tap to Match",
+        prompt: "Match the two halves of each sentence.",
+        pairs: [
+          { left: "I know that boy,", right: "but I don't remember his name." },
+          { left: "I don't understand.", right: "What do you mean?" },
+          { left: "My sneakers are broken,", right: "so I need a new pair." }
+        ],
+        explanation: "Know, remember, understand, mean, and need are all 'No -ing' brain & heart verbs!"
+      },
+      {
+        type: "gap",
+        typeLabel: "Fill in the Gap",
+        before: "We ",
+        hint: "(not / watch)",
+        after: " TV very often because YouTube is way funnier.",
+        accepted: ["don't watch", "do not watch", "dont watch"],
+        displayAnswer: "don't watch",
+        explanation: "'Very often' describes a general habit → Present Simple negative ('don't watch')."
+      },
+      {
+        type: "mcq",
+        typeLabel: "Multiple Choice",
+        prompt: "Look at Leo! Why ______ he ______ two different colored socks today?",
+        options: ["does / wear", "is / wearing", "are / wearing"],
+        correct: 1,
+        explanation: "'Look at Leo!' and 'today' show a temporary situation happening right now → 'is he wearing'."
+      },
+      {
+        type: "gap",
+        typeLabel: "Fill in the Gap",
+        before: "Sorry, I ",
+        hint: "(not / believe)",
+        after: " your story about a dog eating your Wi-Fi router!",
+        accepted: ["don't believe", "do not believe", "dont believe"],
+        displayAnswer: "don't believe",
+        explanation: "'Believe' is one of the 10 'No -ing' verbs, so we use Present Simple ('don't believe')."
+      }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let questionAnswered = false;
+
+    // Matching state
+    let selectedLeftIdx = null;
+    let matchedPairsCount = 0;
+    let shuffledRightItems = [];
+
+    const container = document.getElementById("quiz-container");
+    const progressText = document.getElementById("progress-text");
+    const progressBar = document.getElementById("progress-bar");
+    const scorePill = document.getElementById("score-pill");
+
+    function updateHeader() {
+      progressText.textContent = `${Math.min(currentIndex + 1, quizQuestions.length)} / ${quizQuestions.length}`;
+      const pct = ((currentIndex) / quizQuestions.length) * 100;
+      progressBar.style.width = `${pct}%`;
+      scorePill.textContent = `Score: ${score}`;
+    }
+
+    function renderQuestion() {
+      questionAnswered = false;
+      updateHeader();
+      const q = quizQuestions[currentIndex];
+
+      let badgeColor = "bg-indigo-50 text-indigo-700";
+      if (q.type === "gap") badgeColor = "bg-orange-50 text-orange-700";
+      if (q.type === "match") badgeColor = "bg-emerald-50 text-emerald-700";
+
+      let html = `
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <span class="${badgeColor} text-xs font-extrabold uppercase tracking-wider px-3.5 py-1.5 rounded-full">
+            ${q.typeLabel}
+          </span>
+          <span class="text-xs font-bold text-zinc-400">Question ${currentIndex + 1} of ${quizQuestions.length}</span>
+        </div>
+      `;
+
+      if (q.type === "mcq") {
+        html += `
+          <h2 class="text-xl sm:text-2xl font-extrabold text-zinc-900 leading-snug mb-6">
+            ${q.prompt}
+          </h2>
+          <div class="grid grid-cols-1 gap-3.5" id="mcq-options">
+            ${q.options.map((opt, i) => `
+              <button onclick="handleMcqAnswer(${i}, this)"
+                class="mcq-btn w-full text-left p-4 sm:p-5 rounded-2xl border-2 border-zinc-200 bg-zinc-50 hover:border-indigo-500 hover:bg-indigo-50/60 font-bold text-base sm:text-lg text-zinc-800 transition-all active:scale-[0.99] flex items-center justify-between">
+                <span>${opt}</span>
+                <span class="w-7 h-7 rounded-full border-2 border-zinc-300 flex items-center justify-center text-xs font-extrabold text-zinc-400">
+                  ${String.fromCharCode(65 + i)}
+                </span>
+              </button>
+            `).join("")}
+          </div>
+        `;
+      } else if (q.type === "gap") {
+        html += `
+          <p class="text-sm font-semibold text-zinc-500 mb-3">Type the correct form of the verb in brackets:</p>
+          <div class="bg-zinc-50 border-2 border-zinc-200 rounded-2xl p-5 sm:p-7 text-lg sm:text-2xl font-bold text-zinc-900 leading-relaxed mb-6">
+            <span>${q.before}</span>
+            <span class="inline-flex flex-wrap items-center gap-2 my-1">
+              <input id="gap-input" type="text" autocomplete="off" autocapitalize="none" spellcheck="false"
+                placeholder="type here..."
+                onkeydown="if(event.key==='Enter') handleGapSubmit()"
+                class="w-44 sm:w-52 px-3.5 py-2 rounded-xl border-2 border-indigo-300 bg-white text-indigo-700 font-extrabold text-base sm:text-xl focus:outline-none focus:border-indigo-600 transition-colors" />
+              <span class="text-sm sm:text-base font-extrabold text-orange-600 bg-orange-100 px-2.5 py-1 rounded-lg">
+                ${q.hint}
+              </span>
+            </span>
+            <span>${q.after}</span>
+          </div>
+          <button id="gap-submit-btn" onclick="handleGapSubmit()"
+            class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-base px-7 py-3.5 rounded-2xl shadow-sm transition-all active:scale-[0.98]">
+            Check Answer
+          </button>
+        `;
+      } else if (q.type === "match") {
+        selectedLeftIdx = null;
+        matchedPairsCount = 0;
+        // Shuffle right side items deterministically or randomly
+        shuffledRightItems = q.pairs
+          .map((p, idx) => ({ text: p.right, pairId: idx }))
+          .sort(() => Math.random() - 0.5);
+
+        html += `
+          <h2 class="text-lg sm:text-xl font-extrabold text-zinc-900 mb-2">${q.prompt}</h2>
+          <p class="text-xs sm:text-sm font-medium text-zinc-500 mb-5">Tap a starter on the left, then tap its matching ending on the right.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-3" id="match-left-col">
+              ${q.pairs.map((p, idx) => `
+                <button id="left-item-${idx}" onclick="selectLeftMatch(${idx})"
+                  class="match-left-btn w-full text-left p-4 rounded-2xl border-2 border-zinc-200 bg-zinc-50 hover:border-indigo-400 font-bold text-sm sm:text-base text-zinc-800 transition-all">
+                  ${p.left}
+                </button>
+              `).join("")}
+            </div>
+            <div class="flex flex-col gap-3" id="match-right-col">
+              ${shuffledRightItems.map((item, idx) => `
+                <button id="right-item-${idx}" data-pair-id="${item.pairId}" onclick="selectRightMatch(${idx}, ${item.pairId})"
+                  class="match-right-btn w-full text-left p-4 rounded-2xl border-2 border-zinc-200 bg-white hover:border-orange-400 font-semibold text-sm sm:text-base text-zinc-700 transition-all">
+                  ${item.text}
+                </button>
+              `).join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      // Feedback & Next Container
+      html += `
+        <div id="feedback-box" class="hidden mt-6 p-4 sm:p-5 rounded-2xl border text-sm sm:text-base font-medium leading-relaxed"></div>
+        <div class="mt-6 flex justify-end">
+          <button id="next-btn" onclick="nextQuestion()"
+            class="hidden bg-zinc-900 hover:bg-zinc-800 text-white font-extrabold text-base px-7 py-3.5 rounded-2xl transition-all active:scale-[0.98] items-center gap-2">
+            <span>${currentIndex < quizQuestions.length - 1 ? "Next Question" : "See Final Score"}</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      `;
+
+      container.innerHTML = html;
+
+      if (q.type === "gap") {
+        setTimeout(() => {
+          const inp = document.getElementById("gap-input");
+          if (inp) inp.focus();
+        }, 50);
+      }
+    }
+
+    // --- Multiple Choice Handler ---
+    function handleMcqAnswer(selectedIdx, btnEl) {
+      if (questionAnswered) return;
+      questionAnswered = true;
+
+      const q = quizQuestions[currentIndex];
+      const buttons = document.querySelectorAll(".mcq-btn");
+      buttons.forEach(b => b.disabled = true);
+
+      const isCorrect = selectedIdx === q.correct;
+      if (isCorrect) {
+        score++;
+        btnEl.classList.remove("border-zinc-200", "bg-zinc-50");
+        btnEl.classList.add("border-emerald-500", "bg-emerald-50", "text-emerald-900");
+      } else {
+        btnEl.classList.remove("border-zinc-200", "bg-zinc-50");
+        btnEl.classList.add("border-rose-500", "bg-rose-50", "text-rose-900");
+        const correctBtn = buttons[q.correct];
+        correctBtn.classList.remove("border-zinc-200", "bg-zinc-50");
+        correctBtn.classList.add("border-emerald-500", "bg-emerald-50", "text-emerald-900");
+      }
+
+      showFeedback(isCorrect, q.explanation);
+    }
+
+    // --- Fill in the Gap Handler ---
+    function handleGapSubmit() {
+      if (questionAnswered) return;
+      const inputEl = document.getElementById("gap-input");
+      const rawVal = inputEl.value.trim().toLowerCase().replace(/\s+/g, " ");
+      if (!rawVal) {
+        inputEl.classList.add("border-rose-400");
+        inputEl.focus();
+        return;
+      }
+
+      questionAnswered = true;
+      inputEl.disabled = true;
+      const submitBtn = document.getElementById("gap-submit-btn");
+      if (submitBtn) submitBtn.classList.add("hidden");
+
+      const q = quizQuestions[currentIndex];
+      // Normalize smart apostrophes
+      const normalized = rawVal.replace(/’/g, "'");
+      const isCorrect = q.accepted.includes(normalized);
+
+      if (isCorrect) {
+        score++;
+        inputEl.classList.remove("border-indigo-300", "text-indigo-700");
+        inputEl.classList.add("border-emerald-500", "bg-emerald-50", "text-emerald-800");
+        showFeedback(true, q.explanation);
+      } else {
+        inputEl.classList.remove("border-indigo-300", "text-indigo-700");
+        inputEl.classList.add("border-rose-500", "bg-rose-50", "text-rose-800");
+        showFeedback(false, `Correct answer: <strong>${q.displayAnswer}</strong>. ${q.explanation}`);
+      }
+    }
+
+    // --- Matching Handlers ---
+    function selectLeftMatch(idx) {
+      if (questionAnswered) return;
+      const btn = document.getElementById(`left-item-${idx}`);
+      if (btn.dataset.matched === "true") return;
+
+      document.querySelectorAll(".match-left-btn").forEach(b => {
+        if (b.dataset.matched !== "true") {
+          b.classList.remove("border-indigo-600", "bg-indigo-50", "ring-2", "ring-indigo-200");
+          b.classList.add("border-zinc-200", "bg-zinc-50");
+        }
+      });
+
+      selectedLeftIdx = idx;
+      btn.classList.remove("border-zinc-200", "bg-zinc-50");
+      btn.classList.add("border-indigo-600", "bg-indigo-50", "ring-2", "ring-indigo-200");
+    }
+
+    function selectRightMatch(rightBtnIdx, pairId) {
+      if (questionAnswered || selectedLeftIdx === null) return;
+      const rightBtn = document.getElementById(`right-item-${rightBtnIdx}`);
+      const leftBtn = document.getElementById(`left-item-${selectedLeftIdx}`);
+      if (rightBtn.dataset.matched === "true") return;
+
+      const q = quizQuestions[currentIndex];
+
+      if (selectedLeftIdx === pairId) {
+        // Correct match!
+        leftBtn.dataset.matched = "true";
+        rightBtn.dataset.matched = "true";
+
+        leftBtn.className = "match-left-btn w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 font-bold text-sm sm:text-base text-emerald-900 transition-all opacity-90";
+        rightBtn.className = "match-right-btn w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 font-bold text-sm sm:text-base text-emerald-900 transition-all opacity-90";
+
+        selectedLeftIdx = null;
+        matchedPairsCount++;
+
+        if (matchedPairsCount === q.pairs.length) {
+          questionAnswered = true;
+          score++;
+          showFeedback(true, q.explanation);
+        }
+      } else {
+        // Brief red shake flash
+        rightBtn.classList.add("border-rose-500", "bg-rose-50");
+        setTimeout(() => {
+          if (rightBtn.dataset.matched !== "true") {
+            rightBtn.classList.remove("border-rose-500", "bg-rose-50");
+          }
+        }, 450);
+      }
+    }
+
+    // --- Feedback & Progression ---
+    function showFeedback(isCorrect, text) {
+      updateHeader();
+      const box = document.getElementById("feedback-box");
+      box.classList.remove("hidden");
+
+      if (isCorrect) {
+        box.className = "mt-6 p-4 sm:p-5 rounded-2xl border-2 border-emerald-200 bg-emerald-50 text-emerald-900 text-sm sm:text-base font-medium leading-relaxed";
+        box.innerHTML = `<div class="flex items-start gap-3">
+          <i class="fa-solid fa-circle-check text-emerald-600 text-xl mt-0.5"></i>
+          <div><strong class="font-extrabold">Nice one!</strong> ${text}</div>
+        </div>`;
+      } else {
+        box.className = "mt-6 p-4 sm:p-5 rounded-2xl border-2 border-rose-200 bg-rose-50 text-rose-900 text-sm sm:text-base font-medium leading-relaxed";
+        box.innerHTML = `<div class="flex items-start gap-3">
+          <i class="fa-solid fa-circle-xmark text-rose-600 text-xl mt-0.5"></i>
+          <div><strong class="font-extrabold">Not quite!</strong> ${text}</div>
+        </div>`;
+      }
+
+      const nextBtn = document.getElementById("next-btn");
+      nextBtn.classList.remove("hidden");
+      nextBtn.classList.add("inline-flex");
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex < quizQuestions.length) {
+        renderQuestion();
+      } else {
+        renderResults();
+      }
+    }
+
+    function renderResults() {
+      progressBar.style.width = "100%";
+      progressText.textContent = "Done!";
+      scorePill.textContent = `Score: ${score} / ${quizQuestions.length}`;
+
+      const pct = Math.round((score / quizQuestions.length) * 100);
+      let badgeTitle = "Keep Practicing!";
+      let badgeDesc = "Review the 'Now vs. Always' rules and the 10 No -ing verbs, then try again!";
+      let iconColor = "text-orange-500";
+
+      if (pct === 100) {
+        badgeTitle = "Flawless Legend!";
+        badgeDesc = "12 out of 12! You completely mastered Present Continuous vs. Present Simple!";
+        iconColor = "text-indigo-600";
+      } else if (pct >= 75) {
+        badgeTitle = "Awesome Job!";
+        badgeDesc = "You really know when to use 'I am doing' vs. 'I do'!";
+        iconColor = "text-emerald-600";
+      }
+
+      container.innerHTML = `
+        <div class="text-center py-6 sm:py-10">
+          <div class="w-20 h-20 mx-auto mb-5 rounded-3xl bg-zinc-100 flex items-center justify-center text-4xl ${iconColor}">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <p class="text-xs font-extrabold uppercase tracking-wider text-indigo-600 mb-2">Quiz Complete</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-zinc-900 mb-3">${badgeTitle}</h2>
+          <p class="text-lg sm:text-xl font-bold text-zinc-700 mb-2">
+            You scored <span class="text-indigo-600">${score}</span> out of <span class="text-zinc-900">${quizQuestions.length}</span> (${pct}%)
+          </p>
+          <p class="text-sm sm:text-base text-zinc-500 max-w-md mx-auto mb-8">
+            ${badgeDesc}
+          </p>
+          <button onclick="restartQuiz()"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-base sm:text-lg px-8 py-4 rounded-2xl shadow-sm transition-all active:scale-[0.98] inline-flex items-center gap-2.5">
+            <i class="fa-solid fa-rotate-right"></i>
+            <span>Play Again</span>
+          </button>
+        </div>
+      `;
+    }
+
+    function restartQuiz() {
+      currentIndex = 0;
+      score = 0;
+      renderQuestion();
+    }
+
+    // Start on load
+    renderQuestion();
+  </script>
+</body>
+</html>
